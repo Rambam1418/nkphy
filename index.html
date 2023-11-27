@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi Image Viewer</title>
+    <title>NK PHY RECORD </title>
     <style>
         body {
             display: flex;
@@ -11,30 +11,24 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f0f0;
         }
 
         #image-container {
-            max-width: 80vw;
+            max-width: 100%;
             text-align: center;
-            position: relative;
         }
 
         img {
             max-width: 100%;
             height: auto;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease-in-out;
         }
 
-        #prev-btn, #next-btn {
+        #prev-btn, #next-btn, #zoom-in-btn, #zoom-out-btn {
             cursor: pointer;
             padding: 10px;
             margin: 5px;
             font-size: 18px;
-            background-color: #3498db;
-            color: #fff;
-            border: none;
-            border-radius: 3px;
         }
     </style>
 </head>
@@ -42,12 +36,18 @@
 
 <div id="image-container">
     <button id="prev-btn" onclick="prevImage()">Previous</button>
-    <img id="current-image" src="" alt="Image" onclick="zoomImage()">
+    <button id="zoom-in-btn" onclick="zoomIn()">Zoom In</button>
+    <img id="current-image" src="" alt="Image">
+    <button id="zoom-out-btn" onclick="zoomOut()">Zoom Out</button>
     <button id="next-btn" onclick="nextImage()">Next</button>
 </div>
 
 <script>
+    alert('THANKME LATER, REGARDS NK😘');
+    
     let currentImageIndex = 0;
+    let currentScale = 1.0;
+    const scaleStep = 0.2;
     const images = [
         '1.jpg',
         '2.jpg',
@@ -115,24 +115,38 @@
     const currentImage = document.getElementById('current-image');
     const prevButton = document.getElementById('prev-btn');
     const nextButton = document.getElementById('next-btn');
+    const zoomInButton = document.getElementById('zoom-in-btn');
+    const zoomOutButton = document.getElementById('zoom-out-btn');
 
     function showImage() {
+        currentImage.style.transform = `scale(${currentScale})`;
         currentImage.src = images[currentImageIndex];
-        currentImage.style.transform = 'scale(1)';
     }
 
     function prevImage() {
         currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+        resetZoom();
         showImage();
     }
 
     function nextImage() {
         currentImageIndex = (currentImageIndex + 1) % images.length;
+        resetZoom();
         showImage();
     }
 
-    function zoomImage() {
-        currentImage.style.transform = 'scale(1.5)';
+    function zoomIn() {
+        currentScale += scaleStep;
+        showImage();
+    }
+
+    function zoomOut() {
+        currentScale = Math.max(1.0, currentScale - scaleStep);
+        showImage();
+    }
+
+    function resetZoom() {
+        currentScale = 1.0;
     }
 
     showImage(); // Display the initial image
