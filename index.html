@@ -41,8 +41,8 @@
 <body>
 
 <div id="image-container">
+    <img id="current-image" src="" alt="Image">
     <button id="prev-btn" onclick="prevImage()">Previous</button>
-    <img id="current-image" src="" alt="Image" onclick="zoomImage()">
     <button id="next-btn" onclick="nextImage()">Next</button>
 </div>
 
@@ -126,11 +126,9 @@
         showImage();
     }
 
-    function zoomImage() {
-        currentImage.style.transform = 'scale(1.5)';
-    }
+    
 
-    showImage(); // Display the initial image
+    
 </script>
 
 </body>
